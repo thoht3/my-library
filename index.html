@@ -3,9 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stylesheet.css">
     <title>Document</title>
 </head>
 <body>
-    
+
+    <button id="showButton">Nhấn vô đây để nhập thông tin sách nè!</button>
+    <header class="header">This is my library</header>
+    <main>
+        <dialog id="dialogBook">
+            <div class="addBookPanel">
+                <div>
+                    <div>Title</div>
+                    <input id="inputTitle">
+                </div>
+                <div>
+                    <div>Author</div>
+                    <input id="inputAuthor">
+                </div>            <div>
+                    <div>Pages</div>
+                    <input id="inputPages">
+                </div>
+                <button id="addBook">Add book</button>
+                <button id="cancelAddBook">Cancel</button>
+            </div>
+        </dialog>
+        <div id="libraryContainer"></div>
+    </main>
+    <footer class="footer">Fut to</footer>
 </body>
+<script src="javascript.js"></script>
 </html>

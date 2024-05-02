@@ -1,1 +1,8 @@
+.book {
+    display: flex;
+    border: 1px solid red;
+}
 
+.addBookPanel {
+    border: 4px solid black;
+}
