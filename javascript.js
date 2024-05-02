@@ -28,7 +28,7 @@ console.log(myLibrary);
 function displayLibrary() {
     const libraryContainer = document.getElementById("libraryContainer")
     libraryContainer.innerHTML = "";
-    myLibrary.map(book => {
+    myLibrary.forEach((book, index) => {
         const bookDiv = document.createElement("div");
         bookDiv.classList.add("book");
 
@@ -44,17 +44,29 @@ function displayLibrary() {
         const deleteBook = document.createElement("button");
         deleteBook.textContent = "Delete";
 
-        deleteBook.addEventListener("click", () => {
-            libraryContainer.removeChild(bookDiv);
+        const readStatus = document.createElement("p");
+        readStatus.textContent = "Read status!";
+
+        const toggle = document.createElement("input");
+        toggle.setAttribute("type", "checkbox");
+        toggle.addEventListener("change", () => {
+            // localStorage.setItem("toggleStatus", toggle.checked);
+
+            toggle.checked = !toggle.checked;
+
         })
 
         bookDiv.appendChild(titleP);
         bookDiv.appendChild(authorP);
         bookDiv.appendChild(pagesP);
         bookDiv.appendChild(deleteBook);
+        bookDiv.appendChild(toggle);
+        bookDiv.appendChild(readStatus);
+
+
 
         libraryContainer.appendChild(bookDiv);
-        deleteButton.addEventListener("click", () => {
+        deleteBook.addEventListener("click", () => {
             // Remove the book from the array
             myLibrary.splice(index, 1);
             // Re-display the library after removing the book
