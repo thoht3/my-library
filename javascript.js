@@ -1,15 +1,17 @@
 
 const myLibrary = [];
 
-function Book(title, author, pages) {
+function Book(id, title, author, pages, read) {
+    this.id = id,
     this.title = title,
     this.author = author,
-    this.pages = pages
+    this.pages = pages,
+    this.read = read
 }
-
-let book1 = new Book("Harry Potter", "J.K.Rolling", 887);
-let book2 = new Book("Lord of the Rings", "J.R.R. Tolkien", 1178);
-let book3 = new Book("To Kill a Mockingbird", "Harper Lee", 281);
+let bookIdCounter = 4;
+let book1 = new Book(1, "Harry Potter", "J.K.Rolling", 887, false);
+let book2 = new Book(2, "Lord of the Rings", "J.R.R. Tolkien", 1178, false);
+let book3 = new Book(3, "To Kill a Mockingbird", "Harper Lee", 281, false);
 myLibrary.push(book1, book2, book3);
 
 const clickAddBook = document.getElementById("addBook");
@@ -18,12 +20,20 @@ const title = document.getElementById("inputTitle");
 const author = document.getElementById("inputAuthor");
 const pages = document.getElementById("inputPages");
 clickAddBook.addEventListener("click", () => {addBookToLibrary(title.value, author.value, pages.value)});
-clickCancel.addEventListener("click", () => {});
 
 function addBookToLibrary(title, author, pages) {
-    myLibrary.push(new Book(title, author, pages));
+    myLibrary.push(new Book(bookIdCounter++, title, author, pages, false));
     displayLibrary();
 }
+function saveToggleState(bookID, state) {
+    localStorage.setItem(`toggleStatus-${bookID}`, state)
+}
+
+function getSavedToggleState(bookID) {
+    const savedStatus = localStorage.getItem(`toggleStatus-${bookID}`);
+    return savedStatus === "true"; // Convert to boolean
+}
+
 console.log(myLibrary);
 function displayLibrary() {
     const libraryContainer = document.getElementById("libraryContainer")
@@ -49,10 +59,10 @@ function displayLibrary() {
 
         const toggle = document.createElement("input");
         toggle.setAttribute("type", "checkbox");
+        toggle.checked = getSavedToggleState(book.id);
         toggle.addEventListener("change", () => {
-            // localStorage.setItem("toggleStatus", toggle.checked);
-
-            toggle.checked = !toggle.checked;
+            saveToggleState(book.id, toggle.checked)
+            // toggle.checked = getSavedToggleState(); // Set the initial state from localStorage
 
         })
 
@@ -68,16 +78,15 @@ function displayLibrary() {
         libraryContainer.appendChild(bookDiv);
         deleteBook.addEventListener("click", () => {
             // Remove the book from the array
-            myLibrary.splice(index, 1);
+            myLibrary.splice(index, 1);  // remove the book
             // Re-display the library after removing the book
-            displayLibrary();
+            displayLibrary();  //re-render
         });
 
     })
 }
 
 displayLibrary();
-
 
 
 const dialog = document.getElementById("dialogBook");
